@@ -1,3 +1,9 @@
+## This is a personal fork of Abel's AiiDA Phonopy plugin
+The master branch in my repo. is developed on the basis of 'development' branch of Abel's [aiida-phonopy](https://github.com/abelcarreras/aiida-phonopy). 
+
+
+
+## Below is Abel's readme
 
 AiiDA Phonopy plugin
 ====================
