@@ -116,7 +116,8 @@ def get_BORN_txt(nac_data, symprec=1.e-5, parameters=None, structure=None):
     from phonopy.structure.cells import get_primitive, get_supercell
     from phonopy.structure.symmetry import Symmetry
     from phonopy.structure.atoms import PhonopyAtoms
-    from phonopy.interface.vasp import get_born_OUTCAR, _get_indep_borns
+    from phonopy.interface.vasp import get_born_OUTCAR
+    #from phonopy.interface.vasp import _get_indep_borns #this feature was removed after v1.12.4 of phonopy.
 
 
     born_charges = nac_data.get_array('born_charges')
@@ -127,11 +128,23 @@ def get_BORN_txt(nac_data, symprec=1.e-5, parameters=None, structure=None):
                          positions=[site.position for site in structure_born.sites],
                          cell=structure_born.cell)
 
-    reduced_borns, epsilon, atom_indices = _get_indep_borns(ucell, born_charges, epsilon,
-                                                            primitive_matrix=None,
-                                                            supercell_matrix=None,
-                                                            symmetrize_tensors=True,
-                                                            symprec=1e-5)
+#    reduced_borns, epsilon, atom_indices = elaborate_borns_and_epsilon(
+#        ucell, born_charges, epsilon,
+#        primitive_matrix=None,
+#        supercell_matrix=None,
+#        symmetrize_tensors=True,
+#        symprec=1e-5)
+
+    reduced_borns, epsilon, atom_indices = elaborate_borns_and_epsilon(
+        ucell,
+        born_charges,
+        epsilon,
+        primitive_matrix=primitive_matrix,
+        supercell_matrix=supercell_matrix,
+        is_symmetry=is_symmetry,
+        symmetrize_tensors=symmetrize_tensors,
+        symprec=symprec)
+
 
 
     born_txt = "# epsilon and Z* of atoms "
