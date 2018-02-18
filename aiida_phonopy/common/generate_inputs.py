@@ -281,9 +281,9 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
             'ADDGRID': '.TRUE.',
             'LREAL': '.FALSE.'})
 
+#for forces and born charges, NPAR must use the default NPAR=number of nodes
     elif type == 'forces':
         incar.update({
-            'NPAR': 4,
             'PREC': 'Accurate',
             'ISYM': 0,
             'ISTART': 0,
@@ -297,7 +297,6 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
 
     elif type == 'born_charges':
         incar.update({
-            'NPAR': 4,
             'PREC': 'Accurate',
             'LEPSILON': '.TRUE.',
             'ISTART': 0,
