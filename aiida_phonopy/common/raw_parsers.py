@@ -136,14 +136,20 @@ def get_BORN_txt(nac_data, symprec=1.e-5, parameters=None, structure=None):
 #        symprec=1e-5)
 
     reduced_borns, epsilon, atom_indices = elaborate_borns_and_epsilon(
-        ucell,
-        born_charges,
-        epsilon,
-        primitive_matrix=primitive_matrix,
-        supercell_matrix=supercell_matrix,
-        is_symmetry=is_symmetry,
-        symmetrize_tensors=symmetrize_tensors,
-        symprec=symprec)
+        ucell, born_charges, epsilon,
+        primitive_matrix=None,
+        supercell_matrix=None,
+        symmetrize_tensors=True,
+        symprec=1e-5)
+
+#        ucell,
+#        born_charges,
+#        epsilon,
+#        primitive_matrix=primitive_matrix,
+#        supercell_matrix=supercell_matrix,
+#        is_symmetry=is_symmetry,
+#        symmetrize_tensors=symmetrize_tensors,
+#        symprec=symprec)
 
 
 
