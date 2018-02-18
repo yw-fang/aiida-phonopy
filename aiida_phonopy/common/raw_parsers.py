@@ -118,7 +118,7 @@ def get_BORN_txt(nac_data, symprec=1.e-5, parameters=None, structure=None):
     from phonopy.structure.atoms import PhonopyAtoms
     from phonopy.interface.vasp import get_born_OUTCAR
     #from phonopy.interface.vasp import _get_indep_borns #this feature was removed after v1.12.4 of phonopy.
-
+    from phonopy.structure.symmetry import elaborate_borns_and_epsilon
 
     born_charges = nac_data.get_array('born_charges')
     epsilon = nac_data.get_array('epsilon')
