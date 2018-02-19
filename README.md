@@ -5,6 +5,9 @@ of 'development' branch of Dr. Abel Carreras Conill's
   a copy of his 'development' branch is also included in this repository
   with the same branch name. 
 
+When using my master branch, please use the latest version of phonopy and
+phono3py from which some old features have been removed/chagned.
+
 
 
 
