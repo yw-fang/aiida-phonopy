@@ -260,11 +260,7 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
             'PSTRESS': pressure})  # unit: kb -> kB
 
         if not 'NSW' in incar:
-<<<<<<< HEAD
             incar.update({'NSW': 300})
-=======
-            incar.update({'NSW': 300})
->>>>>>> origin/development
 
     elif type == 'optimize_constant_volume':
         incar.update({
@@ -275,21 +271,12 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
             'ISIF': 4,
             'LWAVE': '.FALSE.',
             'LCHARG': '.FALSE.',
-<<<<<<< HEAD
             'ADDGRID': '.TRUE.',
             'LREAL': '.FALSE.'})
 
         if not 'NSW' in incar:
             incar.update({'NSW': 300})
 
-=======
-            'ADDGRID': '.TRUE.',
-            'LREAL': '.FALSE.'})
-
-        if not 'NSW' in incar:
-            incar.update({'NSW': 300})
-
->>>>>>> origin/development
     elif type == 'forces':
         incar.update({
             'PREC': 'Accurate',
