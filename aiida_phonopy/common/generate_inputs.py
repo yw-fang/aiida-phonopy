@@ -248,7 +248,6 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
 
     if type == 'optimize':
         incar.update({
-            'NPAR': 4,
             'PREC': 'Accurate',
             'ISTART': 0,
             'IBRION': 2,
@@ -264,7 +263,6 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
 
     elif type == 'optimize_constant_volume':
         incar.update({
-            'NPAR': 4,
             'PREC': 'Accurate',
             'ISTART': 0,
             'IBRION': 2,
