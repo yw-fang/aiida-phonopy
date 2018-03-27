@@ -260,11 +260,11 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
             'PSTRESS': pressure})  # unit: kb -> kB
 
         if not 'NSW' in incar:
-            incar.update({'NSW': 200})
-        if not 'EDIFF' in incar:
-            incar.update({'EDIFF': 1.0E-9})
-        if not 'EDIFFG' in incar:
-            incar.update({'EDIFFG': -1.0E-6})
+<<<<<<< HEAD
+            incar.update({'NSW': 300})
+=======
+            incar.update({'NSW': 300})
+>>>>>>> origin/development
 
     elif type == 'optimize_constant_volume':
         incar.update({
@@ -273,25 +273,32 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
             'ISTART': 0,
             'IBRION': 2,
             'ISIF': 4,
-            'NSW': 100,
             'LWAVE': '.FALSE.',
             'LCHARG': '.FALSE.',
-            'EDIFF': 1e-09,
-            'EDIFFG': -1e-06,
+<<<<<<< HEAD
             'ADDGRID': '.TRUE.',
             'LREAL': '.FALSE.'})
 
-#for forces and born charges, NPAR must use the default NPAR=number of nodes
+        if not 'NSW' in incar:
+            incar.update({'NSW': 300})
+
+=======
+            'ADDGRID': '.TRUE.',
+            'LREAL': '.FALSE.'})
+
+        if not 'NSW' in incar:
+            incar.update({'NSW': 300})
+
+>>>>>>> origin/development
     elif type == 'forces':
         incar.update({
             'PREC': 'Accurate',
             'ISYM': 0,
             'ISTART': 0,
             'IBRION': -1,
-            'NSW': 1,
+            'NSW': 0,
             'LWAVE': '.FALSE.',
             'LCHARG': '.FALSE.',
-            'EDIFF': 1e-08,
             'ADDGRID': '.TRUE.',
             'LREAL': '.FALSE.'})
 
@@ -300,13 +307,17 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
             'PREC': 'Accurate',
             'LEPSILON': '.TRUE.',
             'ISTART': 0,
-            'IBRION': 1,
+            'IBRION': -1,
             'NSW': 0,
             'LWAVE': '.FALSE.',
             'LCHARG': '.FALSE.',
-            'EDIFF': 1e-08,
             'ADDGRID': '.TRUE.',
             'LREAL': '.FALSE.'})
+
+    if not 'EDIFF' in incar:
+             incar.update({'EDIFF': 1.0E-8})
+    if not 'EDIFFG' in incar:
+             incar.update({'EDIFFG': -1.0E-6})
 
     inputs.parameters = ParameterData(dict=incar)
 
@@ -318,8 +329,20 @@ def generate_vasp_params(structure, settings, type=None, pressure=0.0):
     kpoints = KpointsData()
     kpoints.set_cell_from_structure(structure)
 
-    if 'kpoints_density' in settings.get_dict():
+    if 'kpoints_density_{}'.format(type) in settings.get_dict():
+        kpoints.set_kpoints_mesh_from_density(settings.get_dict()['kpoints_density_{}'.format(type)])
+
+    elif 'kpoints_density' in settings.get_dict():
         kpoints.set_kpoints_mesh_from_density(settings.dict.kpoints_density)
+
+    elif 'kpoints_mesh_{}'.format(type) in settings.get_dict():
+        if 'kpoints_offset' in settings.get_dict():
+            kpoints_offset = settings.dict.kpoints_offset
+        else:
+            kpoints_offset = [0.0, 0.0, 0.0]
+
+        kpoints.set_kpoints_mesh(settings.get_dict()['kpoints_mesh_{}'.format(type)],
+                                 offset=kpoints_offset)
 
     elif 'kpoints_mesh' in settings.get_dict():
         if 'kpoints_offset' in settings.get_dict():

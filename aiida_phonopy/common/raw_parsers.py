@@ -110,16 +110,23 @@ def parse_kappa(filename):
 
     return kappa
 
-# Generate text strings for files from AIIDA OBJECTS
 
+# Generate text strings for files from AIIDA OBJECTS
 def get_BORN_txt(nac_data, symprec=1.e-5, parameters=None, structure=None):
-    from phonopy.structure.cells import get_primitive, get_supercell
-    from phonopy.structure.symmetry import Symmetry
     from phonopy.structure.atoms import PhonopyAtoms
-    from phonopy.interface.vasp import get_born_OUTCAR
-    from phonopy.interface.vasp import get_born_vasprunxml
-    #from phonopy.interface.vasp import _get_indep_borns #this feature was removed after v1.12.4 of phonopy.
-    from phonopy.structure.symmetry import elaborate_borns_and_epsilon
+<<<<<<< HEAD
+    try:
+        from phonopy.structure.symmetry import elaborate_borns_and_epsilon
+    except ImportError:
+        #Old version of phonopy (version before Jan, 2018)
+        from phonopy.interface.vasp import _get_indep_borns as elaborate_borns_and_epsilon
+=======
+    try:
+        from phonopy.structure.symmetry import elaborate_borns_and_epsilon
+    except ImportError:
+        # Old version of phonopy
+        from phonopy.interface.vasp import _get_indep_borns as elaborate_borns_and_epsilon
+>>>>>>> origin/development
 
     born_charges = nac_data.get_array('born_charges')
     epsilon = nac_data.get_array('epsilon')
@@ -129,6 +136,7 @@ def get_BORN_txt(nac_data, symprec=1.e-5, parameters=None, structure=None):
                          positions=[site.position for site in structure_born.sites],
                          cell=structure_born.cell)
 
+<<<<<<< HEAD
     reduced_borns, epsilon, atom_indices = elaborate_borns_and_epsilon(
         ucell,
         born_charges,
@@ -138,6 +146,16 @@ def get_BORN_txt(nac_data, symprec=1.e-5, parameters=None, structure=None):
         is_symmetry=True,
         symmetrize_tensors=False,
         symprec=1.e-5)
+=======
+    reduced_borns, epsilon, atom_indices = elaborate_borns_and_epsilon(ucell,
+                                                                       born_charges,
+                                                                       epsilon,
+                                                                       primitive_matrix=None,
+                                                                       supercell_matrix=None,
+                                                                       is_symmetry=True,
+                                                                       symmetrize_tensors=False,
+                                                                       symprec=1.e-5)
+>>>>>>> origin/development
 
     born_txt = "# epsilon and Z* of atoms "
     born_txt += ' '.join(["%d" % n for n in atom_indices + 1]) + '\n'
