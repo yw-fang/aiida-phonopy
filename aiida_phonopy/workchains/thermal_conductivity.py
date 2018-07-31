@@ -7,7 +7,12 @@ from aiida.work.run import run, submit
 
 from aiida.orm import load_node, DataFactory, WorkflowFactory, CalculationFactory, Code
 from aiida.orm.data.base import Str, Float, Bool, Int
-from aiida.work.workchain import _If, _While
+try:
+    # match the versions of aiida_core older than v.0.12.X
+    from aiida.work.workchain import _If, _While
+except ImportError:
+    from aiida.work.workchain import if_ as _If
+    from aiida.work.workchain import while_ as _While
 
 from aiida_phonopy.workchains.phono3py_dist import generate_phono3py_params
 

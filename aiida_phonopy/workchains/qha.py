@@ -3,7 +3,11 @@ if not is_dbenv_loaded():
     load_dbenv()
 
 from aiida.work.workchain import WorkChain, ToContext
-from aiida.work.workfunction import workfunction
+try:
+    from aiida.work.workfunctions import workfunction
+except ImportError:
+    # match the older versions of aiida_core
+    from aiida.work.workfunction import workfunction
 from aiida.work.run import run, submit
 
 from aiida.orm import load_node, DataFactory, WorkflowFactory

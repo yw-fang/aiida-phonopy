@@ -1,5 +1,9 @@
 from aiida.orm import load_node, DataFactory
-from aiida.work.workfunction import workfunction
+try:
+    from aiida.work.workfunctions import workfunction
+except ImportError:
+    # match the older versions of aiida_core
+    from aiida.work.workfunction import workfunction
 from aiida.orm.data.base import Str, Float, Bool, Int
 
 StructureData = DataFactory('structure')
